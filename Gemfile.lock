@@ -38,6 +38,7 @@ GEM
     eventmachine (1.0.8)
     execjs (2.6.0)
     ffi (1.9.10)
+    git-version-bump (0.15.1)
     haml (4.0.7)
       tilt
     hike (1.2.3)
@@ -96,7 +97,11 @@ GEM
       tilt (~> 1.4.1)
     padrino-support (0.12.5)
       activesupport (>= 3.1)
+    puma (2.15.3)
     rack (1.6.4)
+    rack-contrib (1.4.0)
+      git-version-bump (~> 0.15)
+      rack (~> 1.4)
     rack-livereload (0.3.16)
       rack
     rack-test (0.6.3)
@@ -142,6 +147,8 @@ DEPENDENCIES
   bundler (>= 1.8.4)
   middleman (~> 3.4.1)
   middleman-livereload (~> 3.3.0)
+  puma
+  rack-contrib
   rails-assets-jquery (~> 2.1.4)!
   rails-assets-materialize (~> 0.97.3)!
   rails-assets-webcamjs (~> 1.0.6)!

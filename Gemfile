@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gem "bundler", ">= 1.8.4"
 
 gem "middleman", "~>3.4.1"
+gem "puma"
 
 # Live-reloading plugin
 gem "middleman-livereload", "~> 3.3.0"
@@ -16,6 +17,7 @@ gem "wdm", "~> 0.1.0", :platforms => [:mswin, :mingw]
 gem "tzinfo-data", platforms: [:mswin, :mingw, :jruby]
 
 gem "slim"
+gem "rack-contrib"
 
 source "https://rails-assets.org" do
   gem "rails-assets-webcamjs", "~> 1.0.6"

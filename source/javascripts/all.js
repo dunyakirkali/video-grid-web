@@ -16,6 +16,8 @@ $(document).ready(function(){
   var pixelData, average_color, padded, rand, sample_file;
 
   function drawVideo(){
+    canvas = $('.result canvas')[0];
+    context = canvas.getContext('2d');
 
     for (r = 0; r < vid_height; r++) {
      $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
@@ -79,7 +81,7 @@ $(document).ready(function(){
   $('#size').on('change', function() {
     $('.result').html('<canvas class="hide" height="60" id="myCanvas" width="80"></canvas>')
     vid_width = $(this).val();
-    vid_height = vid_width * 3 / 4;
+    vid_height = parseInt(vid_width * 3 / 4);
     Webcam.reset();
     drawVideo();
   });

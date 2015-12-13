@@ -4,8 +4,8 @@
 //= require_tree .
 
 $(document).ready(function(){
-  var vid_width = 160;
-  var vid_height = 120;
+  var vid_width = 64;
+  var vid_height = vid_width * 3 / 4;
   var pixel_size = 5;
   var active = false;
   var speed = 500;

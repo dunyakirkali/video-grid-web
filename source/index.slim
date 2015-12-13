@@ -1,0 +1,31 @@
+.row.hide
+  .col.s6.center-align
+    .original
+  .col.s6.center-align
+    .transposed
+.row.hide
+  .info
+    ul
+      - for i in (0..255) do
+        - right_adjusted = i.to_s.rjust(3, '0')
+        li id="sample-#{right_adjusted}"
+          ul
+            - Dir.foreach("source/images/samples/#{right_adjusted}") do |item|
+              - unless item == '.' or item == '..'
+                li.item= item
+.row
+  .col.s12.center-align
+    .row
+      .input-field.col.s4
+        input type="checkbox" id="play"
+        label for="play" Play
+      .range-field.col.s4
+        input type="range" id="pixel" min="1" max="16"
+        label for="pixel" Pixelsize
+      .range-field.col.s4
+        input type="range" id="speed" min="1" max="5000"
+        label for="speed" Speed
+.row.center-align
+  .col.s12
+    .result
+      canvas.hide#myCanvas width='80' height='60'

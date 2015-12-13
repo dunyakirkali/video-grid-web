@@ -5,3 +5,11 @@
 .row {
   margin-bottom: 0;
 }
+
+
+.images img{
+  border:1px solid white;
+}
+
+.images img.active{
+  border:1px solid white;

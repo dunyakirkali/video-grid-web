@@ -8,8 +8,12 @@ $(document).ready(function(){
   var vid_height = 60;
   var pixel_size = 5;
   var active = false;
-  var speed = 1000;
+  var speed = 333;
   var tempImg = [];
+  var canvas = $('.result canvas')[0];
+  var context = canvas.getContext('2d');
+  var img = new Image();
+  var pixelData, average_color, padded, rand, sample_file;
 
   for (r = 0; r < vid_height; r++) {
    $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
@@ -24,7 +28,8 @@ $(document).ready(function(){
      width: vid_width,
      height: vid_height,
      image_format: 'jpeg',
-     jpeg_quality: 90
+     jpeg_quality: 45,
+     fps: 30
    });
    Webcam.attach( '.original' );
 
@@ -35,11 +40,6 @@ $(document).ready(function(){
   }
   function take_snapshot() {
     if(active) {
-      var canvas = $('.result canvas')[0];
-      var context = canvas.getContext('2d');
-      var img = new Image();
-      var pixelData, average_color, padded, rand, sample_file;
-
       canvas.width = vid_width;
       canvas.height = vid_height;
 

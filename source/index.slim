@@ -29,3 +29,11 @@
   .col.s12
     .result
       canvas.hide#myCanvas width='80' height='60'
+
+.row.hide
+  .images
+    - for i in (0..255) do
+      - right_adjusted = i.to_s.rjust(3, '0')
+      - Dir.foreach("source/images/samples/#{right_adjusted}") do |item|
+        - unless item == '.' or item == '..'
+          = image_tag "samples/#{right_adjusted}/#{item}"

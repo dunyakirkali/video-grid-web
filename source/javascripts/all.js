@@ -8,7 +8,7 @@ $(document).ready(function(){
   var vid_height = vid_width * 3 / 4;
   var pixel_size = 5;
   var active = false;
-  var speed = 333;
+  var speed = 500;
   var tempImg = [];
   var canvas = $('.result canvas')[0];
   var context = canvas.getContext('2d');

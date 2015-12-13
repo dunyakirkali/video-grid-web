@@ -19,14 +19,16 @@ $(document).ready(function(){
   //   });
   // }
 
-  for (r = 0; r < vid_height; r++) {
-   $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
-   for (c = 0; c < vid_width; c++) {
-     $('#row_' + r).append( "<span id='pixel_" + (r * vid_width) + c + "'></span>");
-     var image = "<img width='" + pixel_size + "' height='" + pixel_size + "' src='images/samples/000/file.png'>";
-     $('#pixel_' + (r * vid_width) + c).html(image);
-   }
-  }
+  function drawVideo(){
+
+    for (r = 0; r < vid_height; r++) {
+     $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
+     for (c = 0; c < vid_width; c++) {
+       $('#row_' + r).append( "<span id='pixel_" + (r * vid_width) + c + "'></span>");
+       var image = "<img width='" + pixel_size + "' height='" + pixel_size + "' src='images/samples/000/file.png'>";
+       $('#pixel_' + (r * vid_width) + c).html(image);
+     }
+    }
 
    Webcam.set({
      width: vid_width,
@@ -35,6 +37,10 @@ $(document).ready(function(){
      jpeg_quality: 90
    });
    Webcam.attach( '.original' );
+
+  }
+
+  drawVideo()
 
   function pad(num, size) {
     var s = num+"";

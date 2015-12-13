@@ -37,7 +37,8 @@ $(document).ready(function(){
 
     out_canvas.addEventListener('mousemove', function(evt) {
       var mousePos = getMousePos(out_canvas, evt);
-      image = images[parseInt(mousePos.y / pixel_size) * vid_height + parseInt(mousePos.x / pixel_size)];
+      console.log(parseInt(mousePos.y / pixel_size), parseInt(mousePos.x / pixel_size));
+      image = images[(parseInt(mousePos.y / pixel_size) * pixel_size) + parseInt(mousePos.x / pixel_size)];
       $('.images img').removeClass('active');
       $(image).addClass('active');
 

@@ -10,7 +10,6 @@ $(document).ready(function(){
   var active = false;
   var speed = 500;
   var tempImg = [];
-  var colorThief = new ColorThief();
 
   // for (c = 0; c < 256; c++) {
   //   tempImg[c] = [];

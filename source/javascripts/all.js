@@ -4,7 +4,7 @@
 //= require_tree .
 
 $(document).ready(function(){
-  var vid_width = 80;
+  var vid_width = 40;
   var vid_height = vid_width * 3 / 4;
   var pixel_size = 4;
   var active = false;
@@ -15,7 +15,14 @@ $(document).ready(function(){
   var context = canvas.getContext('2d');
   var img;
   var pixelData, average_color, padded, rand, sample_file, intrv;
-
+  var images = [];
+  function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
   function drawVideo(){
     canvas = $('#myCanvas')[0];
     out_canvas = $('#outCanvas')[0];
@@ -27,6 +34,15 @@ $(document).ready(function(){
       jpeg_quality: 45,
       fps: 30
     });
+
+    out_canvas.addEventListener('mousemove', function(evt) {
+      var mousePos = getMousePos(out_canvas, evt);
+      image = images[parseInt(mousePos.y / pixel_size) * vid_height + parseInt(mousePos.x / pixel_size)];
+      $('.images img').removeClass('active');
+      $(image).addClass('active');
+
+    }, false);
+
     Webcam.attach( '.original' );
     setTimeout(function() {
       clearInterval(intrv);
@@ -55,6 +71,7 @@ $(document).ready(function(){
           rand = Math.floor( (Math.random() * $('#sample-' + padded + ' ul li').length) + 1 );
           sample_file = $('#sample-' + padded + ' ul li:nth-child(' + rand +')').text();
           img = $('img[src="' + "/images/samples/" + padded + "/" + sample_file + '"]')[0];
+          images.push(img);
           out_canvas.getContext('2d').drawImage(img, c * pixel_size, r * pixel_size, pixel_size, pixel_size);
         }
       }

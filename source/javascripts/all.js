@@ -16,6 +16,8 @@ $(document).ready(function(){
   var pixelData, average_color, padded, rand, sample_file;
 
   function drawVideo(){
+    canvas = $('.result canvas')[0];
+    context = canvas.getContext('2d');
 
     for (r = 0; r < vid_height; r++) {
      $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );

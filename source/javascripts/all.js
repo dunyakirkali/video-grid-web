@@ -10,37 +10,25 @@ $(document).ready(function(){
   var active = false;
   var speed = 500;
   var tempImg = [];
-  var canvas = $('.result canvas')[0];
+  var canvas = $('#myCanvas')[0];
+  var out_canvas = $('#outCanvas')[0];
   var context = canvas.getContext('2d');
-  var img = new Image();
-  var pixelData, average_color, padded, rand, sample_file;
+  var img;
+  var pixelData, average_color, padded, rand, sample_file, intrv;
 
   function drawVideo(){
-    canvas = $('.result canvas')[0];
+    canvas = $('#myCanvas')[0];
+    out_canvas = $('#outCanvas')[0];
     context = canvas.getContext('2d');
-
-    for (r = 0; r < vid_height; r++) {
-     $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
-     for (c = 0; c < vid_width; c++) {
-       $('#row_' + r).append( "<span id='pixel_" + (r * vid_width) + c + "'></span>");
-       var image = "<img width='" + pixel_size + "' height='" + pixel_size + "' src='images/samples/000/file.png'>";
-       $('#pixel_' + (r * vid_width) + c).html(image);
-     }
-    }
-
-   Webcam.set({
-     width: vid_width,
-     height: vid_height,
-     image_format: 'jpeg',
-     jpeg_quality: 45,
-     fps: 30
-   });
-   Webcam.attach( '.original' );
-
+    Webcam.set({
+      width: vid_width,
+      height: vid_height,
+      image_format: 'jpeg',
+      jpeg_quality: 45,
+      fps: 30
+    });
+    Webcam.attach( '.original' );
   }
-
-  drawVideo()
-
   function pad(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
@@ -50,6 +38,8 @@ $(document).ready(function(){
     if(active) {
       canvas.width = vid_width;
       canvas.height = vid_height;
+      out_canvas.width = vid_width * pixel_size;
+      out_canvas.height = vid_height * pixel_size;
 
       Webcam.snap(function(data_uri, canvaz, context) {}, canvas);
 
@@ -60,26 +50,29 @@ $(document).ready(function(){
           padded = pad(average_color, 3);
           rand = Math.floor( (Math.random() * $('#sample-' + padded + ' ul li').length) + 1 );
           sample_file = $('#sample-' + padded + ' ul li:nth-child(' + rand +')').text();
-          $('#pixel_' + (r * vid_width) + c).find('img').attr('src', "images/samples/" + padded + "/" + sample_file)
+          img = $('img[src="' + "/images/samples/" + padded + "/" + sample_file + '"]')[0];
+          out_canvas.getContext('2d').drawImage(img, c * pixel_size, r * pixel_size, pixel_size, pixel_size);
         }
       }
    }
  }
 
-  setTimeout(function() {
-    setInterval(take_snapshot, speed);
-  }, 5000);
-
   $('#play').on('change', function() {
     active = !active;
   });
 
-  $('#pixel').on('change', function() {
+  $('#speed').on('change', function() {
     speed = $(this).val();
+    clearInterval(intrv);
+    intrv = setInterval(take_snapshot, speed);
   });
 
+  setTimeout(function() {
+    intrv = setInterval(take_snapshot, speed);
+  }, 5000);
+
   $('#size').on('change', function() {
-    $('.result').html('<canvas class="hide" height="60" id="myCanvas" width="80"></canvas>')
+    $('.result').html('<canvas class="hide" id="myCanvas"></canvas><canvas class="hide" id="outCanvas"></canvas>')
     vid_width = $(this).val();
     vid_height = parseInt(vid_width * 3 / 4);
     Webcam.reset();
@@ -96,4 +89,6 @@ $(document).ready(function(){
       $('#row_' + r).css('height', pixel_size);
     }
   });
+
+  drawVideo();
 });

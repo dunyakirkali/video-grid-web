@@ -89,6 +89,14 @@ $(document).ready(function(){
     speed = $(this).val();
   });
 
+  $('#size').on('change', function() {
+    $('.result').html('<canvas class="hide" height="60" id="myCanvas" width="80"></canvas>')
+    vid_width = $(this).val();
+    vid_height = vid_width * 3 / 4;
+    Webcam.reset();
+    drawVideo();
+  });
+
   $('#pixel').on('change', function() {
     pixel_size = $(this).val();
 

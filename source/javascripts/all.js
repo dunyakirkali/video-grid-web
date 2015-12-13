@@ -4,20 +4,12 @@
 //= require_tree .
 
 $(document).ready(function(){
-  var vid_width = 160;
-  var vid_height = 120;
+  var vid_width = 80;
+  var vid_height = 60;
   var pixel_size = 5;
   var active = false;
-  var speed = 500;
+  var speed = 1000;
   var tempImg = [];
-
-  // for (c = 0; c < 256; c++) {
-  //   tempImg[c] = [];
-  //   $('#samlpe-' + pad(c, 3) + ' .item').each(function(index) {
-  //     tempImg[c][index] = new Image();
-  //     tempImg[c][index].src = $(this).text();
-  //   });
-  // }
 
   for (r = 0; r < vid_height; r++) {
    $('.result').append( "<div class='row' id='row_" + r + "' style='height: 5px'></div>" );
@@ -43,14 +35,15 @@ $(document).ready(function(){
   }
   function take_snapshot() {
     if(active) {
-      Webcam.snap(function(data_uri) {
-        // $('.transposed').html('<img src="' + data_uri + '"/>')
+      Webcam.snap(function(data_uri, canvaz, context) {
         var canvas = $('.result canvas')[0];
         var context = canvas.getContext('2d');
         var img = new Image();
         var pixelData, average_color, padded, rand, sample_file;
 
-        img.onload = function () { context.drawImage(img, 0, 0); };
+        img.onload = function () {
+          context.drawImage(img, 0, 0);
+        };
         img.src = data_uri;
 
         canvas.width = vid_width;
@@ -59,7 +52,7 @@ $(document).ready(function(){
 
         for (r = 0; r < vid_height; r++) {
           for (c = 0; c < vid_width; c++) {
-            pixelData = canvas.getContext('2d').getImageData(c, r, 1, 1).data;
+            pixelData = context.getImageData(c, r, 1, 1).data;
             average_color = parseInt((pixelData[0] + pixelData[1] + pixelData[2]) / 3);
             padded = pad(average_color, 3);
             rand = Math.floor( (Math.random() * $('#sample-' + padded + ' ul li').length) + 1 );

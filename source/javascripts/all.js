@@ -6,7 +6,7 @@
 $(document).ready(function(){
   var vid_width = 80;
   var vid_height = vid_width * 3 / 4;
-  var pixel_size = 5;
+  var pixel_size = 4;
   var active = false;
   var speed = 500;
   var tempImg = [];
@@ -28,6 +28,10 @@ $(document).ready(function(){
       fps: 30
     });
     Webcam.attach( '.original' );
+    setTimeout(function() {
+      clearInterval(intrv);
+      intrv = setInterval(take_snapshot, speed);
+    }, 5000);
   }
   function pad(num, size) {
     var s = num+"";
@@ -67,27 +71,17 @@ $(document).ready(function(){
     intrv = setInterval(take_snapshot, speed);
   });
 
-  setTimeout(function() {
-    intrv = setInterval(take_snapshot, speed);
-  }, 5000);
-
   $('#size').on('change', function() {
-    $('.result').html('<canvas class="hide" id="myCanvas"></canvas><canvas class="hide" id="outCanvas"></canvas>')
+    clearInterval(intrv);
+    $('.result').html('<canvas width="' + + '" height="" class="hide" id="myCanvas"></canvas><canvas class="hide" id="outCanvas"></canvas>')
     vid_width = $(this).val();
-    vid_height = parseInt(vid_width * 3 / 4);
+    vid_height = parseInt(vid_width / 4 * 3);
     Webcam.reset();
     drawVideo();
   });
 
   $('#pixel').on('change', function() {
     pixel_size = $(this).val();
-
-    for (r = 0; r < vid_height; r++) {
-      for (c = 0; c < vid_width; c++) {
-        $('#pixel_' + (r * vid_width) + c).find('img').attr('width', pixel_size).attr('height', pixel_size);
-      }
-      $('#row_' + r).css('height', pixel_size);
-    }
   });
 
   drawVideo();
